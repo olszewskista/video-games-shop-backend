@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 3000;
 const authRouter = require('./routes/auth');
+const gamesRouter = require('./routes/games');
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser())
 app.use('/auth', authRouter);
+app.use('/games', gamesRouter);
 
 app.get('/', (req, res) => {
     res.json({ message: 'ok' });

@@ -1,11 +1,25 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const AddressSchema = new mongoose.Schema({
+    street: String,
+    postCode: String,
+    city: String,
+    country: String
+})
+
+const CreditCardSchema = new mongoose.Schema({
+    owner: String,
+    number: String,
+    expireDay: Number,
+    expireMonth: Number,
+    ccv: Number
+})
+
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
-        uniqe: true,
     },
     email: {
         type: String,
@@ -23,7 +37,14 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
+        minlength: 6
     },
+    library: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Game'
+    }],
+    address: AddressSchema,
+    creditCard: CreditCardSchema
 });
 
 UserSchema.pre('save', async function (next) {

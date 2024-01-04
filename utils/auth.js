@@ -11,13 +11,15 @@ function checkAuthMiddleware(req, res, next) {
     const token = req.cookies.jwt
     if (!token) {
         res.status(400).json({error: 'You have to be logged in', redirectURL: '/login'})
+    } else {
+        jwt.verify(token, SECRET, (err, decodedToken) => {
+            if (err) {
+                res.status(400).json({error: err.message, redirectURL: '/login'})
+            } else {
+                next()
+            }
+        })
     }
-    jwt.verify(token, SECRET, (err, decodedToken) => {
-        if (err) {
-            res.status(400).json({error: err.message, redirectURL: '/login'})
-        }
-        next()
-    })
 }
 
 module.exports = {createToken, checkAuthMiddleware}
