@@ -41,7 +41,16 @@ const UserSchema = new mongoose.Schema({
     },
     library: [{
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'Game'
+        ref: 'game'
+    }],
+    balance: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    orderHistory: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'order'
     }],
     address: AddressSchema,
     creditCard: CreditCardSchema

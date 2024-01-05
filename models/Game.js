@@ -20,7 +20,11 @@ const GameSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
-    }
+    },
+    category: {
+        type: String,
+        enum: ['action', 'adventure', 'casual', 'indie', 'multiplayer', 'racing', 'rpg', 'simulation', 'sports', 'strategy']
+    },
 })
 
 const Game = mongoose.model('game', GameSchema)

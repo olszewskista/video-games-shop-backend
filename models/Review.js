@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const ReviewSchema = new mongoose.Schema({
     gameId: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'Game'
+        ref: 'game'
     },
     title: {
         type: String,
