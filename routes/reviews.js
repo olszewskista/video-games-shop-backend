@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
         console.log('GETTING REVIEWS')
-        const reviews = await Review.find().populate({ path: 'author', select: 'name' });
+        const reviews = await Review.find().populate({ path: 'author', select: 'username' });
         console.log(reviews)
         res.status(200).json(reviews);
     } catch (error) {
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 router.get('/:gameId', async (req, res) => {
     try {
         console.log('GETTING REVIEWS')
-        const reviews = await Review.find({gameId: req.params.gameId}).populate({ path: 'author', select: 'name' });
+        const reviews = await Review.find({gameId: req.params.gameId}).populate({ path: 'author', select: 'username' });
         console.log(reviews)
         res.status(200).json(reviews);
     } catch (error) {

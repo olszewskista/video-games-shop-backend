@@ -17,9 +17,9 @@ const CreditCardSchema = new mongoose.Schema({
 })
 
 const UserSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
-        required: [true, 'Name is required'],
+        required: [true, 'Username is required'],
     },
     email: {
         type: String,

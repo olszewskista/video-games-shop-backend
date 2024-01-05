@@ -19,10 +19,10 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
     
     try {
-        const user = new User({ name, email, password });
+        const user = new User({ username, email, password });
         await user.save();
         const token = createToken(user._id)
         // res.cookie('jwt', token, {httpOnly: true, maxAge: 1000 * 60 * 60})
