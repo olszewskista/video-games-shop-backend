@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 3000;
 const authRouter = require('./routes/auth');
 const gamesRouter = require('./routes/games');
+const reviewsRouter = require('./routes/reviews');
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser())
 app.use('/auth', authRouter);
 app.use('/games', gamesRouter);
+app.use('/reviews', reviewsRouter);
 
 app.get('/', (req, res) => {
     res.json({ message: 'ok' });

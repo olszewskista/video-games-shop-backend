@@ -1,5 +1,6 @@
 const { Router } = require("express");
-const Game = require('../models/Game')
+const Game = require('../models/Game');
+const { checkAuthMiddleware } = require("../utils/auth");
 
 const router = Router()
 
@@ -7,6 +8,7 @@ const router = Router()
 router.get('/', async (req, res) => {
     try {
         const games = await Game.find()
+        console.log(res.locals.token)
         res.status(200).json(games)
     } catch (error) {
         res.status(500).send('Could not fetch games')
