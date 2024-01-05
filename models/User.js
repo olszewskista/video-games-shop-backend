@@ -11,8 +11,8 @@ const AddressSchema = new mongoose.Schema({
 const CreditCardSchema = new mongoose.Schema({
     owner: String,
     number: String,
-    expireDay: Number,
     expireMonth: Number,
+    expireYear: Number,
     ccv: Number
 })
 
@@ -52,6 +52,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'order'
     }],
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     address: AddressSchema,
     creditCard: CreditCardSchema
 });

@@ -14,13 +14,13 @@ function validateToken(token) {
 function checkAuthMiddleware(req, res, next) {
     if (!req.headers.authorization) {
         console.log('NOT AUTH. AUTH HEADER MISSING.');
-        return res.status(400).send('not authorized');
+        return res.status(400).send('Authorization header required');
     }
     const authFragments = req.headers.authorization.split(' ');
 
     if (authFragments.length !== 2) {
         console.log('NOT AUTH. AUTH HEADER INVALID.');
-        return res.status(400).send('not authorized');
+        return res.status(400).send('Authorization header invalid');
     }
     const authToken = authFragments[1];
     try {
@@ -28,7 +28,7 @@ function checkAuthMiddleware(req, res, next) {
         res.locals.token = validatedToken;
     } catch (error) {
         console.log('NOT AUTH. TOKEN INVALID.');
-        return res.status(400).send('not authorized');
+        return res.status(400).send('Invalid token');
     }
     next();
 }
