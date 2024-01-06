@@ -2,18 +2,42 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const AddressSchema = new mongoose.Schema({
-    street: String,
-    postCode: String,
-    city: String,
-    country: String
+    street: {
+        type: String,
+        default: ''
+    },
+    postCode: {
+        type: String,
+        default: ''
+    },
+    city: {
+        type: String,
+        default: ''
+    },
+    country: {
+        type: String,
+        default: ''
+    }
 })
 
 const CreditCardSchema = new mongoose.Schema({
-    owner: String,
-    number: String,
-    expireMonth: Number,
-    expireYear: Number,
-    ccv: Number
+    owner: {
+        type: String,
+        default: ''
+    },
+    number: {
+        type: String,
+        default: ''
+    },
+    expireMonth: {
+        type: Number,
+    },
+    expireYear: {
+        type: Number,
+    },
+    cvv: {
+        type: Number,
+    }
 })
 
 const UserSchema = new mongoose.Schema({
