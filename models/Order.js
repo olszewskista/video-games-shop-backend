@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const OrderSchema = new mongoose.Schema({
-    userId: {
+    user: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'user',
         required: true
@@ -14,6 +14,11 @@ const OrderSchema = new mongoose.Schema({
     game: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'game',
+        required: true
+    },
+    payment: {
+        type: String,
+        enum: ['balance', 'creditCard', 'transfer'],
         required: true
     },
     price: {
