@@ -33,11 +33,12 @@ router.post('/buy/:gameId', checkAuthMiddleware, async (req, res) => {
             type: 'purchase',
             payment: req.body.payment,
             price: req.body.price,
-            date: Date.now()
+            date: Date.now(),
+            refundable: true
         })
         await order.save()
         user.orderHistory.push(order._id)
-        if (req.body.payment === 'balance') user.balance -= game.price
+        if (req.body.payment === 'balance') user.balance -= req.body.price
         user.library.push(game._id)
         await user.save()
         res.status(200).json({id: order._id})
@@ -52,30 +53,31 @@ router.post('/refund/:orderId', checkAuthMiddleware, async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id)
         const order = await Order.findById(req.params.orderId)
-        console.log(order.game)
+        if (!order.refundable) {
+            throw new Error('You cannot refund this order')
+        }
         const refund = new Order({
             user: user._id,
             game: order.game,
             type: 'refund',
             payment: order.payment,
             price: order.price,
-            date: Date.now()
+            date: Date.now(),
+            refundable: false
         })
-        console.log(refund)
         await refund.save()
         user.orderHistory.push(refund._id)
         if (order.payment === 'balance') user.balance += order.price
         user.library = user.library.filter(game => !game.equals(order.game))
         console.log(user.library)
         await user.save()
+        order.refundable = false
+        await order.save()
         res.status(200).json({id: order._id})
     } catch (error) {
         console.log(error.message)
         res.status(500).json(error.message)
     }
-
 })
-
-router.post('/refund/:orderId', (req, res) => {})
 
 module.exports = router

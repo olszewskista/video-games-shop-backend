@@ -11,6 +11,10 @@ const OrderSchema = new mongoose.Schema({
         enum: ['purchase', 'refund'],
         required: true
     },
+    refundable: {
+        type: Boolean,
+        required: true,
+    },
     game: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'game',
