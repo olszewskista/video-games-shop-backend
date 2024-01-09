@@ -47,3 +47,5 @@ router.post('/buy/:gameId', checkAuthMiddleware, async (req, res) => {
 })
 
 router.post('/refund/:orderId', (req, res) => {})
+
+module.exports = router
