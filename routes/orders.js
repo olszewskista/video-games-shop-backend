@@ -3,6 +3,7 @@ const Game = require('../models/Game')
 const User = require('../models/User')
 const Order = require('../models/Order')
 const {checkAuthMiddleware} = require('../utils/auth')
+const { default: mongoose } = require('mongoose')
 
 const router = Router()
 
@@ -44,6 +45,35 @@ router.post('/buy/:gameId', checkAuthMiddleware, async (req, res) => {
         console.log(error.message)
         res.status(500).json(error.message)
     }
+})
+
+//refund order with desired id
+router.post('/refund/:orderId', checkAuthMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(res.locals.token.id)
+        const order = await Order.findById(req.params.orderId)
+        console.log(order.game)
+        const refund = new Order({
+            user: user._id,
+            game: order.game,
+            type: 'refund',
+            payment: order.payment,
+            price: order.price,
+            date: Date.now()
+        })
+        console.log(refund)
+        await refund.save()
+        user.orderHistory.push(refund._id)
+        if (order.payment === 'balance') user.balance += order.price
+        user.library = user.library.filter(game => !game.equals(order.game))
+        console.log(user.library)
+        await user.save()
+        res.status(200).json({id: order._id})
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json(error.message)
+    }
+
 })
 
 router.post('/refund/:orderId', (req, res) => {})
