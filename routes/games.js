@@ -32,11 +32,20 @@ router.post('/:id/buy', checkAuthMiddleware, async (req, res) => {
     try {
         const game = await Game.findById(req.params.id)
         const user = await User.findById(res.locals.token.id)
+        console.log(req.body.price)
+        console.log(req.body.payment)
+        console.log(req.body)
         if (user.library.includes(game._id)) {
             throw new Error('You already own this game')
         }
         if (req.body.payment === 'balance' && user.balance < req.body.price) {
             throw new Error('You do not have enough money to buy this game')
+        }
+        if (req.body.payment === 'creditCard' && !user.creditCard) {
+            throw new Error('You do not have a valid credit card')
+        }
+        if (!user.address) {
+            throw new Error('You have to enter an address')
         }
         const order = new Order({
             user: user._id,
@@ -48,13 +57,13 @@ router.post('/:id/buy', checkAuthMiddleware, async (req, res) => {
         })
         await order.save()
         user.orderHistory.push(order._id)
-        user.balance -= game.price
+        if (req.body.payment === 'balance') user.balance -= game.price
         user.library.push(game._id)
         await user.save()
-        res.status(200).json(user)
+        res.status(200).json({id: order._id})
     } catch (error) {
-        console.log(error)
-        res.status(500).send(error.message || error)
+        console.log(error.message)
+        res.status(500).json(error.message)
     }
 
 })
