@@ -77,4 +77,21 @@ router.get('/library', async (req, res) => {
     }
 });
 
+router.get('/orders', async (req, res) => {
+    try {
+        const user = await User.findById(res.locals.token.id).populate({
+            path: 'orderHistory',
+            populate: {
+                path: 'game',
+                model: 'game',
+            },
+        
+        });
+        res.status(200).json(user.orderHistory);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Could not fetch user library');
+    }
+});
+
 module.exports = router;
