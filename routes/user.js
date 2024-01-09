@@ -87,6 +87,7 @@ router.get('/orders', async (req, res) => {
             },
         
         });
+        user.orderHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
         res.status(200).json(user.orderHistory);
     } catch (error) {
         console.log(error);
