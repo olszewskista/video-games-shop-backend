@@ -95,4 +95,22 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+router.post('/favorites/:gameId', async (req, res) => {
+    try {
+        const user = await User.findById(res.locals.token.id);
+        if (user.favorites.includes(req.params.gameId)) {
+            user.favorites = user.favorites.filter(
+                (game) => !game.equals(req.params.gameId)
+            );
+        } else {
+            user.favorites.push(req.params.gameId);
+        }
+        await user.save();
+        res.status(200).json(user.favorites);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Could not update user favorites');
+    }
+})
+
 module.exports = router;

@@ -80,6 +80,10 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    favorites: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'game'
+    }],
     address: AddressSchema,
     creditCard: CreditCardSchema
 });
