@@ -25,6 +25,14 @@ const GameSchema = new mongoose.Schema({
         type: String,
         enum: ['action', 'adventure', 'casual', 'indie', 'multiplayer', 'racing', 'rpg', 'simulation', 'sports', 'strategy']
     },
+    releaseDate: {
+        type: Date,
+        required: true,
+    },
+    views: {
+        type: Number,
+        default: 0
+    },
 })
 
 const Game = mongoose.model('game', GameSchema)
