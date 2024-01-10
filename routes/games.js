@@ -17,6 +17,18 @@ router.get('/', async (req, res) => {
     }
 })
 
+//add new game to store
+router.post('/add', checkAuthMiddleware, async (req, res) => {
+    try {
+        const game = new Game(req.body)
+        await game.save()
+        console.log(game)
+        res.status(200).json(game)
+    } catch (error) {
+        res.status(500).send('Could not add game')
+    }
+})
+
 //get list of games spiecified by query parameters
 router.get('/filter', async (req, res) => {
     try {

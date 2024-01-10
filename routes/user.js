@@ -113,4 +113,42 @@ router.post('/favorites/:gameId', async (req, res) => {
     }
 })
 
+//get user with desired email
+router.get('/:email', async (req, res) => {
+    try {
+        const user = await User.find({email: req.params.email});
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).send('Could not fetch user');
+    }
+});
+
+//delete user with desired id
+router.delete('/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).send('Could not delete user');
+    }
+})
+
+//change desired user property
+router.put('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (req.body.key === 'balance') {
+            user[req.body.key] = parseInt(req.body.value);
+        } else if (req.body.key === 'isAdmin') {
+            user[req.body.key] = Boolean(parseInt(req.body.value));
+        } else {
+            user[req.body.key] = req.body.value;
+        }
+        await user.save();
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).send('Could not update user');
+    }
+})
+
 module.exports = router;
