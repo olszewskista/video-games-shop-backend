@@ -41,6 +41,8 @@ router.post('/', checkAuthMiddleware, async (req, res) => {
             title: req.body.title,
         });
         await review.save();
+        await review.populate('author', 'username');
+        console.log(review);
         res.status(201).json(review);
     } catch (error) {
         console.log(error);

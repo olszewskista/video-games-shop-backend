@@ -41,7 +41,7 @@ router.post('/buy/:gameId', checkAuthMiddleware, async (req, res) => {
         if (req.body.payment === 'balance') user.balance -= req.body.price
         user.library.push(game._id)
         await user.save()
-        res.status(200).json({id: order._id})
+        res.status(200).json({id: order._id, balance: user.balance, library: user.library})
     } catch (error) {
         console.log(error.message)
         res.status(500).json(error.message)
