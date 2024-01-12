@@ -73,7 +73,7 @@ router.post('/refund/:orderId', checkAuthMiddleware, async (req, res) => {
         await user.save()
         order.refundable = false
         await order.save()
-        res.status(200).json({id: order._id})
+        res.status(200).json({balance: user.balance, library: user.library})
     } catch (error) {
         console.log(error.message)
         res.status(500).json(error.message)
