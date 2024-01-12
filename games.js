@@ -12,7 +12,7 @@ const games = [
         price: 29.99,
         category: 'racing',
         image: 'https://storage.googleapis.com/games-store/VelocityRacer.jpg',
-        releaseDate: '2023-02-15'
+        releaseDate: '2023-02-15',
     },
     {
         title: 'Urban Circuit Challenge',
@@ -21,7 +21,7 @@ const games = [
         price: 39.99,
         category: 'racing',
         image: 'https://storage.googleapis.com/games-store/UrbanCircuit.jpg',
-        releaseDate: '2022-08-20'
+        releaseDate: '2022-08-20',
     },
     {
         title: 'Offroad Fury',
@@ -30,7 +30,7 @@ const games = [
         price: 49.99,
         category: 'racing',
         image: 'https://storage.googleapis.com/games-store/OffroadFury.jpg',
-        releaseDate: '2023-11-10'
+        releaseDate: '2023-11-10',
     },
     {
         title: 'Battle of Field',
@@ -39,7 +39,7 @@ const games = [
         price: 49.99,
         category: 'action',
         image: 'https://storage.googleapis.com/games-store/BattleOfField.jpg',
-        releaseDate: '2022-09-01'
+        releaseDate: '2022-09-01',
     },
     {
         title: 'Stealth Ops: Covert Infiltration',
@@ -48,7 +48,7 @@ const games = [
         price: 59.99,
         category: 'action',
         image: 'https://storage.googleapis.com/games-store/StealthOps.jpg',
-        releaseDate: '2021-04-29'
+        releaseDate: '2021-04-29',
     },
     {
         title: 'Apocalypse Rising',
@@ -57,7 +57,7 @@ const games = [
         price: 39.99,
         category: 'action',
         image: 'https://storage.googleapis.com/games-store/ApocalypseRising.jpg',
-        releaseDate: '2022-12-12'
+        releaseDate: '2022-12-12',
     },
     {
         title: 'Lost Kingdom Quest',
@@ -66,7 +66,7 @@ const games = [
         price: 49.99,
         category: 'adventure',
         image: 'https://storage.googleapis.com/games-store/LostKingdom.jpg',
-        releaseDate: '2019-01-31'
+        releaseDate: '2019-01-31',
     },
     {
         title: 'Mystic Forest Exploration',
@@ -75,7 +75,7 @@ const games = [
         price: 39.99,
         category: 'adventure',
         image: 'https://storage.googleapis.com/games-store/MysticForest.jpg',
-        releaseDate: '2020-01-01'
+        releaseDate: '2020-01-01',
     },
     {
         title: "Time Traveler's Odyssey",
@@ -84,7 +84,7 @@ const games = [
         price: 59.99,
         category: 'adventure',
         image: 'https://storage.googleapis.com/games-store/TimeTravelers.jpg',
-        releaseDate: '2021-03-21'
+        releaseDate: '2021-03-21',
     },
     {
         title: 'Pixel Adventure Quest',
@@ -93,7 +93,7 @@ const games = [
         price: 24.99,
         category: 'indie',
         image: 'https://storage.googleapis.com/games-store/PixelAdventure.jpg',
-        releaseDate: '2018-07-22'
+        releaseDate: '2018-07-22',
     },
     {
         title: "Whimsical Wanderer's Tale",
@@ -102,7 +102,7 @@ const games = [
         price: 19.99,
         category: 'indie',
         image: 'https://storage.googleapis.com/games-store/WhimsicalWanderers.jpg',
-        releaseDate: '2019-01-01'
+        releaseDate: '2019-01-01',
     },
     {
         title: 'Rogue Legacy Reborn',
@@ -111,7 +111,7 @@ const games = [
         price: 29.99,
         category: 'indie',
         image: 'https://storage.googleapis.com/games-store/RogueLegacy.jpg',
-        releaseDate: '2023-11-13'
+        releaseDate: '2023-11-13',
     },
     {
         title: 'CyberStrike Arena',
@@ -120,7 +120,7 @@ const games = [
         price: 49.99,
         category: 'multiplayer',
         image: 'https://storage.googleapis.com/games-store/CyberStrike.jpg',
-        releaseDate: '2019-12-12'
+        releaseDate: '2019-12-12',
     },
     {
         title: 'Galactic Guilds Online',
@@ -129,7 +129,7 @@ const games = [
         price: 39.99,
         category: 'multiplayer',
         image: 'https://storage.googleapis.com/games-store/GalacticGuilds.jpg',
-        releaseDate: '2017-05-21'
+        releaseDate: '2017-05-21',
     },
     {
         title: 'Legends of the Arena: Battle Royale',
@@ -138,7 +138,7 @@ const games = [
         price: 29.99,
         category: 'multiplayer',
         image: 'https://storage.googleapis.com/games-store/LegendsOfArena.jpg',
-        releaseDate: '2015-11-29'
+        releaseDate: '2015-11-29',
     },
     {
         title: 'Chronicles of Eldoria',
@@ -147,7 +147,7 @@ const games = [
         price: 49.99,
         category: 'rpg',
         image: 'https://storage.googleapis.com/games-store/ChroniclesOfEldoria.jpg',
-        releaseDate: '2016-10-01'
+        releaseDate: '2016-10-01',
     },
     {
         title: 'Starlight Odyssey: Galactic Saga',
@@ -156,7 +156,7 @@ const games = [
         price: 59.99,
         category: 'rpg',
         image: 'https://storage.googleapis.com/games-store/StarlightOdyssey.jpg',
-        releaseDate: '2023-02-02'
+        releaseDate: '2023-02-02',
     },
     {
         title: "Shadow's Veil: Dark Prophecy",
@@ -165,7 +165,7 @@ const games = [
         price: 39.99,
         category: 'rpg',
         image: 'https://storage.googleapis.com/games-store/ShadowVeil.jpg',
-        releaseDate: '2014-09-09'
+        releaseDate: '2014-09-09',
     },
     {
         title: 'City Builder Tycoon',
@@ -174,7 +174,7 @@ const games = [
         price: 29.99,
         category: 'simulation',
         image: 'https://storage.googleapis.com/games-store/CityBuilder.jpg',
-        releaseDate: '2018-04-21'
+        releaseDate: '2018-04-21',
     },
     {
         title: 'Flight Simulator Pro X',
@@ -183,7 +183,7 @@ const games = [
         price: 39.99,
         category: 'simulation',
         image: 'https://storage.googleapis.com/games-store/FlightSimulator.jpg',
-        releaseDate: '2023-08-03'
+        releaseDate: '2023-08-03',
     },
     {
         title: "Chef's Delight: Culinary Simulator",
@@ -192,7 +192,7 @@ const games = [
         price: 24.99,
         category: 'simulation',
         image: 'https://storage.googleapis.com/games-store/ChefsDelight.jpg',
-        releaseDate: '2010-09-11'
+        releaseDate: '2010-09-11',
     },
     {
         title: 'Ultimate Soccer Challenge',
@@ -201,7 +201,7 @@ const games = [
         price: 34.99,
         category: 'sports',
         image: 'https://storage.googleapis.com/games-store/UltimateSoccer.jpg',
-        releaseDate: '2019-05-12'
+        releaseDate: '2019-05-12',
     },
     {
         title: 'Extreme Skateboard Showdown',
@@ -210,7 +210,7 @@ const games = [
         price: 29.99,
         category: 'sports',
         image: 'https://storage.googleapis.com/games-store/ExtremeSkate.jpg',
-        releaseDate: '2016-02-29'
+        releaseDate: '2016-02-29',
     },
     {
         title: 'Grand Slam Tennis Pro',
@@ -219,7 +219,7 @@ const games = [
         price: 39.99,
         category: 'sports',
         image: 'https://storage.googleapis.com/games-store/GrandSlamTennis.jpg',
-        releaseDate: '2017-03-30'
+        releaseDate: '2017-03-30',
     },
     {
         title: 'Empire Builders: Civilization Rising',
@@ -228,7 +228,7 @@ const games = [
         price: 49.99,
         category: 'strategy',
         image: 'https://storage.googleapis.com/games-store/EmpireBuilders.jpg',
-        releaseDate: '2022-09-05'
+        releaseDate: '2022-09-05',
     },
     {
         title: 'Galactic Commanders: Star Conquest',
@@ -237,7 +237,7 @@ const games = [
         price: 39.99,
         category: 'strategy',
         image: 'https://storage.googleapis.com/games-store/GalacticCommanders.jpg',
-        releaseDate: '2022-08-11'
+        releaseDate: '2022-08-11',
     },
     {
         title: 'Kingdoms at War: Fantasy Tactics',
@@ -246,14 +246,44 @@ const games = [
         price: 34.99,
         category: 'strategy',
         image: 'https://storage.googleapis.com/games-store/KingdomsAtWar.jpg',
-        releaseDate: '2023-12-12'
+        releaseDate: '2023-12-12',
+    },
+    {
+        title: 'Fruit Swipe Mania',
+        description:
+            'Indulge in the sweet and juicy world of Fruit Swipe Mania! Match colorful fruits, complete levels, and unlock new challenges. With simple and addictive gameplay, this casual game is perfect for quick and enjoyable gaming sessions.',
+        price: 9.99,
+        category: 'casual',
+        image: 'https://storage.googleapis.com/games-store/FruitSwipe.jpg',
+        releaseDate: '2019-01-11',
+    },
+    {
+        title: 'Puzzle Paradise',
+        description:
+            'Escape to Puzzle Paradise and enjoy a variety of mind-bending puzzles! Solve jigsaw puzzles, match tiles, and explore different puzzle modes. With relaxing music and visually appealing designs, this casual game offers a stress-free escape for puzzle enthusiasts.',
+        price: 14.99,
+        category: 'casual',
+        image: 'https://storage.googleapis.com/games-store/PuzzleParadise.jpg',
+        releaseDate: '2020-01-01',
+    },
+    {
+        title: 'Bubble Pop Adventure',
+        description:
+            'Embark on a bubbly adventure in Bubble Pop Adventure! Pop colorful bubbles, complete challenges, and progress through cheerful levels. With cheerful graphics and easy-to-learn gameplay, this casual game is suitable for players of all ages.',
+        price: 19.99,
+        category: 'casual',
+        image: 'https://storage.googleapis.com/games-store/BubblePop.jpg',
+        releaseDate: '2023-08-08',
     },
 ];
 
 main();
 async function main() {
     games.forEach(async (game) => {
-        const newGame = new Game({...game, releaseDate: new Date(game.releaseDate)});
+        const newGame = new Game({
+            ...game,
+            releaseDate: new Date(game.releaseDate),
+        });
         await newGame.save();
     });
 
