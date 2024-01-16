@@ -9,6 +9,7 @@ const gamesRouter = require('./routes/games');
 const reviewsRouter = require('./routes/reviews');
 const userRouter = require('./routes/user');
 const ordersRouter = require('./routes/orders');
+const ticketsRouter = require('./routes/tickets')
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -23,6 +24,7 @@ app.use('/games', gamesRouter);
 app.use('/reviews', reviewsRouter);
 app.use('/user', userRouter);
 app.use('/orders', ordersRouter);
+app.use('/tickets', ticketsRouter)
 
 app.get('/', (req, res) => {
     res.json({ message: 'ok' });

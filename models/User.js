@@ -84,6 +84,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'game'
     }],
+    tickets: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'ticket'
+    }],
     address: AddressSchema,
     creditCard: CreditCardSchema
 });
