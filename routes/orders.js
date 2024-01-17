@@ -6,15 +6,13 @@ const {checkAuthMiddleware} = require('../utils/auth')
 const { default: mongoose } = require('mongoose')
 
 const router = Router()
+router.use(checkAuthMiddleware)
 
 //buy game with desired id
-router.post('/buy/:gameId', checkAuthMiddleware, async (req, res) => {
+router.post('/buy/:gameId', async (req, res) => {
     try {
         const game = await Game.findById(req.params.gameId)
         const user = await User.findById(res.locals.token.id)
-        console.log(req.body.price)
-        console.log(req.body.payment)
-        console.log(req.body)
         if (user.library.includes(game._id)) {
             throw new Error('You already own this game')
         }
@@ -49,7 +47,7 @@ router.post('/buy/:gameId', checkAuthMiddleware, async (req, res) => {
 })
 
 //refund order with desired id
-router.post('/refund/:orderId', checkAuthMiddleware, async (req, res) => {
+router.post('/refund/:orderId', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id)
         const order = await Order.findById(req.params.orderId)

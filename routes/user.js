@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const User = require('../models/User');
 const Game = require('../models/Game');
-const { checkAuthMiddleware } = require('../utils/auth');
-const { default: mongoose } = require('mongoose');
+const { checkAuthMiddleware, verifyAdmin } = require('../utils/auth');
 
 const router = Router();
 router.use(checkAuthMiddleware);
@@ -122,7 +121,7 @@ router.post('/favorites/:gameId', async (req, res) => {
 })
 
 //get user with desired email
-router.get('/:email', async (req, res) => {
+router.get('/:email', verifyAdmin, async (req, res) => {
     try {
         const user = await User.find({email: req.params.email});
         res.status(200).json(user);
@@ -132,7 +131,7 @@ router.get('/:email', async (req, res) => {
 });
 
 //delete user with desired id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyAdmin, async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         res.status(200).json(user);
@@ -142,7 +141,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 //change desired user property
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyAdmin, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (req.body.key === 'balance') {

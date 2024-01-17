@@ -2,9 +2,10 @@ const { Router } = require("express");
 const Game = require('../models/Game');
 const User = require('../models/User');
 const Order = require('../models/Order');
-const { checkAuthMiddleware } = require("../utils/auth");
+const { checkAuthMiddleware, verifyAdmin } = require("../utils/auth");
 
 const router = Router()
+router.use(checkAuthMiddleware)
 
 //get list of games
 router.get('/', async (req, res) => {
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
 })
 
 //add new game to store
-router.post('/add', checkAuthMiddleware, async (req, res) => {
+router.post('/add', verifyAdmin, async (req, res) => {
     try {
         const game = new Game(req.body)
         await game.save()

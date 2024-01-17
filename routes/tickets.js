@@ -16,7 +16,7 @@ router.get('/', verifyAdmin, async (req, res) => {
     }
 })
 
-//get tickets of user with desired id
+//get tickets of currently logged user
 router.get('/user', async (req, res) => {
     try {
         const tickets = await Ticket.find({user: res.locals.token.id})
@@ -29,7 +29,6 @@ router.get('/user', async (req, res) => {
 //create new ticket
 router.post('/add', async (req, res) => {
     try {
-        console.log(res.locals.token)
         const ticket = new Ticket({
             title: req.body.title,
             messages: [
@@ -59,7 +58,7 @@ router.put('/:id', async (req, res) => {
 })
 
 //change status of ticket with desired id
-router.put('/status/:id', async (req, res) => {
+router.put('/status/:id', verifyAdmin, async (req, res) => {
     try {
         const ticket = await Ticket.findById(req.params.id)
         if (ticket.status === 'open') {

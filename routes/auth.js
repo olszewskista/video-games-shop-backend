@@ -8,7 +8,6 @@ const router = Router();
 //login user with email and password
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const user = await User.login(email, password)
         const token = createToken(user._id)
@@ -21,7 +20,6 @@ router.post('/login', async (req, res) => {
 //register user with email, username and password
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
-    
     try {
         const user = new User({ username, email, password });
         await user.save();

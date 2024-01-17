@@ -3,13 +3,12 @@ const Review = require('../models/Review');
 const { checkAuthMiddleware } = require('../utils/auth');
 
 const router = Router();
+router.use(checkAuthMiddleware);
 
 //get all reviews
 router.get('/', async (req, res) => {
     try {
-        console.log('GETTING REVIEWS')
         const reviews = await Review.find().populate({ path: 'author', select: 'username' });
-        console.log(reviews)
         res.status(200).json(reviews);
     } catch (error) {
         res.status(500).send('Could not fetch reviews');
@@ -19,9 +18,7 @@ router.get('/', async (req, res) => {
 //get all reviews for a game
 router.get('/:gameId', async (req, res) => {
     try {
-        console.log('GETTING REVIEWS')
         const reviews = await Review.find({gameId: req.params.gameId}).populate({ path: 'author', select: 'username' });
-        console.log(reviews)
         res.status(200).json(reviews);
     } catch (error) {
         res.status(500).send('Could not fetch reviews');
@@ -29,9 +26,7 @@ router.get('/:gameId', async (req, res) => {
 });
 
 //create a review
-router.post('/', checkAuthMiddleware, async (req, res) => {
-    console.log(res.locals.token)
-    console.log(req.body)
+router.post('/', async (req, res) => {
     try {
         const review = new Review({
             gameId: req.body.gameId,
