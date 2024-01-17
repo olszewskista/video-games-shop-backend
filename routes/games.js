@@ -10,7 +10,9 @@ router.use(checkAuthMiddleware)
 //get list of games
 router.get('/', async (req, res) => {
     try {
-        const games = await Game.find()
+        const games = await Game.aggregate([
+            {$sort: {views: -1}},
+        ])
         res.status(200).json(games)
     } catch (error) {
         console.log(error);
@@ -46,7 +48,7 @@ router.get('/filter', async (req, res) => {
             aggregateQuery.push({$sort: {[key]: parseInt(order)}})
         }
         if (aggregateQuery.length === 0) {
-            games = await Game.find()
+            games = await Game.aggregate([{$sort: {views: -1}}])
         } else {
             games = await Game.aggregate(aggregateQuery)
         }
