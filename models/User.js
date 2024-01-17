@@ -31,12 +31,18 @@ const CreditCardSchema = new mongoose.Schema({
     },
     expireMonth: {
         type: Number,
+        min: 1,
+        max: 12
     },
     expireYear: {
         type: Number,
+        min: 24,
+        max: 40
     },
     cvv: {
         type: Number,
+        min: 100,
+        max: 999
     }
 })
 

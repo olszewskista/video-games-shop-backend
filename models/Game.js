@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const GameSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
@@ -23,6 +24,7 @@ const GameSchema = new mongoose.Schema({
     },
     category: {
         type: String,
+        required: true,
         enum: ['action', 'adventure', 'casual', 'indie', 'multiplayer', 'racing', 'rpg', 'simulation', 'sports', 'strategy']
     },
     releaseDate: {
@@ -31,6 +33,7 @@ const GameSchema = new mongoose.Schema({
     },
     views: {
         type: Number,
+        required: true,
         default: 0
     },
 })
