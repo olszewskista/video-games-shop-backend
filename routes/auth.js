@@ -1,10 +1,11 @@
 const { Router } = require('express');
 const User = require('../models/User');
 const Discount = require('../models/Discount');
-const {createToken} = require('../utils/auth')
+const {createToken, verifyAdmin, checkAuthMiddleware} = require('../utils/auth')
 
 const router = Router();
 
+//login user with email and password
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -15,9 +16,9 @@ router.post('/login', async (req, res) => {
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-
 });
 
+//register user with email, username and password
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
     
@@ -32,6 +33,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+//verify discount code and return discount value
 router.get('/discount/:code', async (req, res) => {
     try {
         const discount = await Discount.find({code: req.params.code});
@@ -41,8 +43,9 @@ router.get('/discount/:code', async (req, res) => {
     }
 })
 
-router.post('/logout', (req, res) => {
-    res.send('logout');
-});
+//verify admin
+router.get('/admin', checkAuthMiddleware, verifyAdmin, async (req, res) => {
+    res.status(200).json({message: 'Admin verified'})
+})
 
 module.exports = router;

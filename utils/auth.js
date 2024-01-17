@@ -41,7 +41,7 @@ async function verifyAdmin(req, res, next) {
             throw new Error('Not authorized');
         }
     } catch (error) {
-        return res.status(401).send(error.message);
+        return res.status(401).send(error.message || 'Not authorized');
     }
     next();
 }

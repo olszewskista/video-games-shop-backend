@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const Ticket = require('../models/Ticket')
 const {Router} = require('express')
-const {checkAuthMiddleware} = require('../utils/auth')
+const {checkAuthMiddleware, verifyAdmin} = require('../utils/auth')
 
 const router = Router()
 router.use(checkAuthMiddleware)
 
 //get list of tickets
-router.get('/', async (req, res) => {
+router.get('/', verifyAdmin, async (req, res) => {
     try {
         const tickets = await Ticket.find()
         res.status(200).json(tickets)

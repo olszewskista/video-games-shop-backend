@@ -7,6 +7,8 @@ const { default: mongoose } = require('mongoose');
 const router = Router();
 router.use(checkAuthMiddleware);
 
+
+//get currently logged in user
 router.get('/', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id);
@@ -16,6 +18,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+//update auth info of currently logged in user
 router.put('/update/auth', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id);
@@ -30,6 +33,7 @@ router.put('/update/auth', async (req, res) => {
     }
 });
 
+//update address of currently logged in user
 router.put('/update/address', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id);
@@ -48,6 +52,7 @@ router.put('/update/address', async (req, res) => {
     }
 });
 
+//update credit card info of currently logged in user
 router.put('/update/creditCard', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id);
@@ -67,6 +72,7 @@ router.put('/update/creditCard', async (req, res) => {
     }
 });
 
+//get currently logged in user's library
 router.get('/library', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id).populate('library');
@@ -77,6 +83,7 @@ router.get('/library', async (req, res) => {
     }
 });
 
+//get currently logged in user's order history
 router.get('/orders', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id).populate({
@@ -95,6 +102,7 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+//update currently logged in user's favorite games
 router.post('/favorites/:gameId', async (req, res) => {
     try {
         const user = await User.findById(res.locals.token.id);
