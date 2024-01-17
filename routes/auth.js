@@ -36,9 +36,9 @@ router.post('/signup', async (req, res) => {
 //verify discount code and return discount value
 router.get('/discount/:code', async (req, res) => {
     try {
-        const discount = await Discount.find({code: req.params.code});
-        if (discount.length === 0) throw new Error('Code not found');
-        res.status(200).json({discount: discount[0].discount});
+        const discount = await Discount.findOne({code: req.params.code});
+        if (!discount) throw new Error('Code not found');
+        res.status(200).json({discount: discount.discount});
     } catch (error) {
         console.log(error);
         res.status(400).json({error: error.message || 'Could not verify discount code'})

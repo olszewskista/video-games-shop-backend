@@ -13,9 +13,9 @@ router.post('/buy/:gameId', async (req, res) => {
     try {
         const game = await Game.findById(req.params.gameId)
         const user = await User.findById(res.locals.token.id)
-        let discount = await Discount.find({code: req.body.code})
-        if (discount.length > 0) {
-            discount = discount[0].discount/100
+        let discount = await Discount.findOne({code: req.body.code})
+        if (discount) {
+            discount = discount.discount/100
         } else {
             discount = 0
         }
@@ -74,7 +74,6 @@ router.post('/refund/:orderId', async (req, res) => {
         user.orderHistory.push(refund._id)
         if (order.payment === 'balance') user.balance += order.price
         user.library = user.library.filter(game => !game.equals(order.game))
-        console.log(user.library)
         await user.save()
         order.refundable = false
         await order.save()

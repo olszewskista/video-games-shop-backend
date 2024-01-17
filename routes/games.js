@@ -46,12 +46,10 @@ router.get('/filter', async (req, res) => {
         if (req.query.sort !== '') {
             const [key, order] = req.query.sort.split('_')
             aggregateQuery.push({$sort: {[key]: parseInt(order)}})
-        }
-        if (aggregateQuery.length === 0) {
-            games = await Game.aggregate([{$sort: {views: -1}}])
         } else {
-            games = await Game.aggregate(aggregateQuery)
+            aggregateQuery.push({$sort: {views: -1}})
         }
+        games = await Game.aggregate(aggregateQuery)
         res.status(200).json(games)
     } catch (error) {
         console.log(error);
