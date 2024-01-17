@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Game = require('./models/Game');
 const Discount = require('./models/Discount');
 
-mongoose.connect('mongodb://localhost:27017/');
+mongoose.connect('mongodb+srv://stepik-mongo-app:stepikMongoApp@stepik-mongo-app.yop01b0.mongodb.net/?retryWrites=true&w=majority');
 
 const games = [
     {

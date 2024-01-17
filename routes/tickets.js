@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Ticket = require('../models/Ticket')
 const {Router} = require('express')
 const {checkAuthMiddleware, verifyAdmin} = require('../utils/auth')

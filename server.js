@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 3000;
 const authRouter = require('./routes/auth');
 const gamesRouter = require('./routes/games');
@@ -18,7 +17,6 @@ mongoose.connection.on('connected', () => console.log('Connected to db'));
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser())
 app.use('/auth', authRouter);
 app.use('/games', gamesRouter);
 app.use('/reviews', reviewsRouter);
