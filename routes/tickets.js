@@ -12,7 +12,8 @@ router.get('/', verifyAdmin, async (req, res) => {
         const tickets = await Ticket.find()
         res.status(200).json(tickets)
     } catch (error) {
-        res.status(500).send(error.message || 'Could not fetch tickets')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch tickets'})
     }
 })
 
@@ -22,7 +23,8 @@ router.get('/user', async (req, res) => {
         const tickets = await Ticket.find({user: res.locals.token.id})
         res.status(200).json(tickets)
     } catch (error) {
-        res.status(500).send(error.message || 'Could not fetch tickets')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch tickets'})
     }
 })
 
@@ -40,7 +42,8 @@ router.post('/add', async (req, res) => {
         await ticket.save()
         res.status(200).json(ticket)
     } catch (error) {
-        res.status(500).send(error.message || 'Could not add ticket')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not add ticket'})
     }
 })
 
@@ -53,7 +56,8 @@ router.put('/:id', async (req, res) => {
         await ticket.save()
         res.status(200).json(newMessage)
     } catch (error) {
-        res.status(500).send(error.message || 'Could not add message to ticket')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not add message to ticket'})
     }
 })
 
@@ -69,7 +73,8 @@ router.put('/status/:id', verifyAdmin, async (req, res) => {
         await ticket.save()
         res.status(200).json(ticket.status)
     } catch (error) {
-        res.status(500).send(error.message || 'Could not change status of ticket')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not change status of ticket'})
     }
 })
 

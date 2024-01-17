@@ -3,7 +3,6 @@ const Game = require('../models/Game')
 const User = require('../models/User')
 const Order = require('../models/Order')
 const {checkAuthMiddleware} = require('../utils/auth')
-const { default: mongoose } = require('mongoose')
 const Discount = require('../models/Discount')
 
 const router = Router()
@@ -48,8 +47,9 @@ router.post('/buy/:gameId', async (req, res) => {
         await user.save()
         res.status(200).json({id: order._id, balance: user.balance, library: user.library})
     } catch (error) {
-        console.log(error.message)
-        res.status(500).json(error.message)
+        console.log(error);
+        if (error instanceof Error) res.status(400).json({error: error.message})
+        else res.status(500).json({error: error.message || 'Could not buy game'})
     }
 })
 
@@ -80,8 +80,8 @@ router.post('/refund/:orderId', async (req, res) => {
         await order.save()
         res.status(200).json({balance: user.balance, library: user.library})
     } catch (error) {
-        console.log(error.message)
-        res.status(500).json(error.message)
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not refund order'})
     }
 })
 

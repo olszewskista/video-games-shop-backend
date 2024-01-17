@@ -13,7 +13,8 @@ router.post('/login', async (req, res) => {
         const token = createToken(user._id)
         res.status(200).json({token})
     } catch (error) {
-        res.status(400).json({error: error.message})
+        console.log(error);
+        res.status(400).json({error: error.message || 'Could not login'})
     }
 });
 
@@ -26,8 +27,9 @@ router.post('/signup', async (req, res) => {
         const token = createToken(user._id)
         res.status(201).json({token})
     } catch (error) {
+        console.log(error);
         if (error.code === 11000) return res.status(400).json({error: 'Email already exists'})
-        res.status(400).json({error: error.message})
+        res.status(400).json({error: error.message || 'Could not register'})
     }
 });
 
@@ -35,9 +37,11 @@ router.post('/signup', async (req, res) => {
 router.get('/discount/:code', async (req, res) => {
     try {
         const discount = await Discount.find({code: req.params.code});
+        if (discount.length === 0) throw new Error('Code not found');
         res.status(200).json({discount: discount[0].discount});
     } catch (error) {
-        res.status(400).json({error: 'Code not found'})
+        console.log(error);
+        res.status(400).json({error: error.message || 'Could not verify discount code'})
     }
 })
 

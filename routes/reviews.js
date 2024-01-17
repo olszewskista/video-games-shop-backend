@@ -11,7 +11,8 @@ router.get('/', async (req, res) => {
         const reviews = await Review.find().populate({ path: 'author', select: 'username' });
         res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).send('Could not fetch reviews');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch reviews'});
     }
 });
 
@@ -21,7 +22,8 @@ router.get('/:gameId', async (req, res) => {
         const reviews = await Review.find({gameId: req.params.gameId}).populate({ path: 'author', select: 'username' });
         res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).send('Could not fetch reviews');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch reviews'});
     }
 });
 
@@ -37,11 +39,10 @@ router.post('/', async (req, res) => {
         });
         await review.save();
         await review.populate('author', 'username');
-        console.log(review);
         res.status(201).json(review);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not create review');
+        res.status(500).json({error: error.message || 'Could not add review'});
     }
 })
 

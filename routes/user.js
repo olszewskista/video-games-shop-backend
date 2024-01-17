@@ -13,7 +13,8 @@ router.get('/', async (req, res) => {
         const user = await User.findById(res.locals.token.id);
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).send('Could not fetch user');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch user'});
     }
 });
 
@@ -28,7 +29,8 @@ router.put('/update/auth', async (req, res) => {
         console.log(user);
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).send('Could not update user auth');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not update user auth'});
     }
 });
 
@@ -47,7 +49,7 @@ router.put('/update/address', async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not update user address');
+        res.status(500).json({error: error.message || 'Could not update user address'});
     }
 });
 
@@ -67,7 +69,7 @@ router.put('/update/creditCard', async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not update user credit card');
+        res.status(500).json({error: error.message || 'Could not update user credit card'});
     }
 });
 
@@ -78,7 +80,7 @@ router.get('/library', async (req, res) => {
         res.status(200).json(user.library);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not fetch user library');
+        res.status(500).json({error: error.message || 'Could not fetch user library'});
     }
 });
 
@@ -97,7 +99,7 @@ router.get('/orders', async (req, res) => {
         res.status(200).json(user.orderHistory);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not fetch user library');
+        res.status(500).json({error: error.message || 'Could not fetch user library'});
     }
 });
 
@@ -116,7 +118,7 @@ router.post('/favorites/:gameId', async (req, res) => {
         res.status(200).json(user.favorites);
     } catch (error) {
         console.log(error);
-        res.status(500).send('Could not update user favorites');
+        res.status(500).json({error: error.message || 'Could not update user favorites'});
     }
 })
 
@@ -126,7 +128,8 @@ router.get('/:email', verifyAdmin, async (req, res) => {
         const user = await User.find({email: req.params.email});
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).send('Could not fetch user');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch user'});
     }
 });
 
@@ -136,7 +139,8 @@ router.delete('/:id', verifyAdmin, async (req, res) => {
         const user = await User.findByIdAndDelete(req.params.id);
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).send('Could not delete user');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not delete user'});
     }
 })
 
@@ -154,7 +158,8 @@ router.put('/:id', verifyAdmin, async (req, res) => {
         await user.save();
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).send('Could not update user');
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not update user'});
     }
 })
 

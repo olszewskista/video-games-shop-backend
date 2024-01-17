@@ -11,10 +11,10 @@ router.use(checkAuthMiddleware)
 router.get('/', async (req, res) => {
     try {
         const games = await Game.find()
-        console.log(res.locals.token)
         res.status(200).json(games)
     } catch (error) {
-        res.status(500).send('Could not fetch games')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch games'})
     }
 })
 
@@ -23,10 +23,10 @@ router.post('/add', verifyAdmin, async (req, res) => {
     try {
         const game = new Game(req.body)
         await game.save()
-        console.log(game)
-        res.status(200).json(game)
+        res.status(201).json(game)
     } catch (error) {
-        res.status(500).send('Could not add game')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not add game'})
     }
 })
 
@@ -50,11 +50,10 @@ router.get('/filter', async (req, res) => {
         } else {
             games = await Game.aggregate(aggregateQuery)
         }
-        console.log(req.query)
         res.status(200).json(games)
     } catch (error) {
-        console.log(error)
-        res.status(500).send('Could not fetch games')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch games'})
     }
 })
 
@@ -66,7 +65,8 @@ router.get('/:id', async (req, res) => {
         await game.save()
         res.status(200).json(game)
     } catch (error) {
-        res.status(500).send('Could not fetch game')
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not fetch game'})
     }
 })
 
