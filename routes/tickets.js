@@ -17,9 +17,9 @@ router.get('/', async (req, res) => {
 })
 
 //get tickets of user with desired id
-router.get('/:userId', async (req, res) => {
+router.get('/user', async (req, res) => {
     try {
-        const tickets = await Ticket.find({user: req.params.userId})
+        const tickets = await Ticket.find({user: res.locals.token.id})
         res.status(200).json(tickets)
     } catch (error) {
         res.status(500).send(error.message || 'Could not fetch tickets')
