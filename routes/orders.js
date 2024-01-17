@@ -22,7 +22,7 @@ router.post('/buy/:gameId', async (req, res) => {
         if (user.library.includes(game._id)) {
             throw new Error('You already own this game')
         }
-        if (req.body.payment === 'balance' && user.balance < req.body.price) {
+        if (req.body.payment === 'balance' && user.balance < (game.price * (1 - discount)).toFixed(2)) {
             throw new Error('You do not have enough money to buy this game')
         }
         if (req.body.payment === 'creditCard' && !user.creditCard) {
