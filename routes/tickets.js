@@ -58,4 +58,20 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+//change status of ticket with desired id
+router.put('/status/:id', async (req, res) => {
+    try {
+        const ticket = await Ticket.findById(req.params.id)
+        if (ticket.status === 'open') {
+            ticket.status = 'closed'
+        } else {
+            ticket.status = 'open'
+        }
+        await ticket.save()
+        res.status(200).json(ticket.status)
+    } catch (error) {
+        res.status(500).send(error.message || 'Could not change status of ticket')
+    }
+})
+
 module.exports = router
