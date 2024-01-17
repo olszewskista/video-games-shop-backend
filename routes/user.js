@@ -133,11 +133,22 @@ router.get('/:email', verifyAdmin, async (req, res) => {
     }
 });
 
+//delte currently logged in user
+router.delete('/', async (req, res) => {
+    try {
+        const response = await User.findByIdAndDelete(res.locals.token.id);
+        res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error: error.message || 'Could not delete user'});
+    }
+});
+
 //delete user with desired id
 router.delete('/:id', verifyAdmin, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        res.status(200).json(user);
+        const response = await User.findByIdAndDelete(req.params.id);
+        res.status(200).json(response);
     } catch (error) {
         console.log(error);
         res.status(500).json({error: error.message || 'Could not delete user'});
