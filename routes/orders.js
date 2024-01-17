@@ -4,6 +4,7 @@ const User = require('../models/User')
 const Order = require('../models/Order')
 const {checkAuthMiddleware} = require('../utils/auth')
 const { default: mongoose } = require('mongoose')
+const Discount = require('../models/Discount')
 
 const router = Router()
 router.use(checkAuthMiddleware)
@@ -13,6 +14,12 @@ router.post('/buy/:gameId', async (req, res) => {
     try {
         const game = await Game.findById(req.params.gameId)
         const user = await User.findById(res.locals.token.id)
+        let discount = await Discount.find({code: req.body.code})
+        if (discount.length > 0) {
+            discount = discount[0].discount/100
+        } else {
+            discount = 0
+        }
         if (user.library.includes(game._id)) {
             throw new Error('You already own this game')
         }
@@ -30,13 +37,13 @@ router.post('/buy/:gameId', async (req, res) => {
             game: game._id,
             type: 'purchase',
             payment: req.body.payment,
-            price: req.body.price,
+            price: (game.price * (1 - discount)).toFixed(2),
             date: Date.now(),
             refundable: true
         })
         await order.save()
         user.orderHistory.push(order._id)
-        if (req.body.payment === 'balance') user.balance -= req.body.price
+        if (req.body.payment === 'balance') user.balance -= order.price
         user.library.push(game._id)
         await user.save()
         res.status(200).json({id: order._id, balance: user.balance, library: user.library})
