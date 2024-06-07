@@ -1,6 +1,7 @@
 const Ticket = require('../models/Ticket')
 const {Router} = require('express')
 const {checkAuthMiddleware, verifyAdmin} = require('../utils/auth')
+const User = require('../models/User')
 
 const router = Router()
 router.use(checkAuthMiddleware)
@@ -19,7 +20,8 @@ router.get('/', verifyAdmin, async (req, res) => {
 //get tickets of currently logged user
 router.get('/user', async (req, res) => {
     try {
-        const tickets = await Ticket.find({user: res.locals.token.id})
+        const user = await User.findOne({email: res.locals.token.email})
+        const tickets = await Ticket.find({user: user._id})
         res.status(200).json(tickets)
     } catch (error) {
         console.log(error);
@@ -30,13 +32,14 @@ router.get('/user', async (req, res) => {
 //create new ticket
 router.post('/add', async (req, res) => {
     try {
+        const user = await User.findOne({email: res.locals.token.email})
         const ticket = new Ticket({
             title: req.body.title,
             messages: [
                 {message: req.body.message, sender: 'user'}
             ],
             status: 'open',
-            user: res.locals.token.id,
+            user: user._id,
         })
         await ticket.save()
         res.status(200).json(ticket)

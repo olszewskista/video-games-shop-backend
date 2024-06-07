@@ -12,7 +12,7 @@ router.use(checkAuthMiddleware)
 router.post('/buy/:gameId', async (req, res) => {
     try {
         const game = await Game.findById(req.params.gameId)
-        const user = await User.findById(res.locals.token.id)
+        const user = await User.findOne({email: res.locals.token.email})
         let discount = await Discount.findOne({code: req.body.code})
         if (discount) {
             discount = discount.discount/100
@@ -56,7 +56,7 @@ router.post('/buy/:gameId', async (req, res) => {
 //refund order with desired id
 router.post('/refund/:orderId', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id)
+        const user = await User.findOne({ email: res.locals.token.email });
         const order = await Order.findById(req.params.orderId)
         if (!order.refundable) {
             throw new Error('You cannot refund this order')

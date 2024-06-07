@@ -5,22 +5,41 @@ const { checkAuthMiddleware, verifyAdmin } = require('../utils/auth');
 const router = Router();
 router.use(checkAuthMiddleware);
 
-
 //get currently logged in user
 router.get('/', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id);
-        res.status(200).json(user);
+        // console.log(res.locals.token.resource_access.account);
+        // console.log(res.locals.token.realm_access);
+        // const user = await User.findOne(res.locals.token.id);
+        const user = await User.findOne({ email: res.locals.token.email });
+        // console.log(user);
+        if (user) {
+            if (JSON.stringify(user.roles) !== JSON.stringify(res.locals.token.realm_access.roles)) {
+                user.roles = res.locals.token.realm_access.roles
+                await user.save()
+            }
+            res.status(200).json(user);
+        } else {
+            const newUser = new User({
+                email: res.locals.token.email,
+                username: res.locals.token.preferred_username,
+                roles: res.locals.token.realm_access.roles
+            });
+            await newUser.save()
+            res.status(200).json(newUser)
+        }
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not fetch user'});
+        res.status(500).json({
+            error: error.message || 'Could not fetch user',
+        });
     }
 });
 
 //update auth info of currently logged in user
 router.put('/update/auth', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id);
+        const user = await User.findOne({ email: res.locals.token.email });
         user.username = req.body.username;
         user.email = req.body.email;
         user.password = req.body.password;
@@ -29,14 +48,16 @@ router.put('/update/auth', async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not update user auth'});
+        res.status(500).json({
+            error: error.message || 'Could not update user auth',
+        });
     }
 });
 
 //update address of currently logged in user
 router.put('/update/address', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id);
+        const user = await User.findOne({ email: res.locals.token.email });
         user.address = {
             street: req.body.street,
             city: req.body.city,
@@ -48,14 +69,16 @@ router.put('/update/address', async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not update user address'});
+        res.status(500).json({
+            error: error.message || 'Could not update user address',
+        });
     }
 });
 
 //update credit card info of currently logged in user
 router.put('/update/creditCard', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id);
+        const user = await User.findOne({ email: res.locals.token.email });
         user.creditCard = {
             owner: req.body.owner,
             number: req.body.number,
@@ -68,44 +91,51 @@ router.put('/update/creditCard', async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not update user credit card'});
+        res.status(500).json({
+            error: error.message || 'Could not update user credit card',
+        });
     }
 });
 
 //get currently logged in user's library
 router.get('/library', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id).populate('library');
+        const user = await User.findOne({ email: res.locals.token.email }).populate(
+            'library'
+        );
         res.status(200).json(user.library);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not fetch user library'});
+        res.status(500).json({
+            error: error.message || 'Could not fetch user library',
+        });
     }
 });
 
 //get currently logged in user's order history
 router.get('/orders', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id).populate({
+        const user = await User.findOne({ email: res.locals.token.email }).populate({
             path: 'orderHistory',
             populate: {
                 path: 'game',
                 model: 'game',
             },
-        
         });
         user.orderHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
         res.status(200).json(user.orderHistory);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not fetch user library'});
+        res.status(500).json({
+            error: error.message || 'Could not fetch user library',
+        });
     }
 });
 
 //update currently logged in user's favorite games
 router.post('/favorites/:gameId', async (req, res) => {
     try {
-        const user = await User.findById(res.locals.token.id);
+        const user = await User.findOne({ email: res.locals.token.email });;
         if (user.favorites.includes(req.params.gameId)) {
             user.favorites = user.favorites.filter(
                 (game) => !game.equals(req.params.gameId)
@@ -117,29 +147,37 @@ router.post('/favorites/:gameId', async (req, res) => {
         res.status(200).json(user.favorites);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not update user favorites'});
+        res.status(500).json({
+            error: error.message || 'Could not update user favorites',
+        });
     }
-})
+});
 
 //get user with desired email
 router.get('/:email', verifyAdmin, async (req, res) => {
     try {
-        const user = await User.find({email: req.params.email});
+        console.log("jestsem")
+        const user = await User.find({ email: req.params.email });
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not fetch user'});
+        res.status(500).json({
+            error: error.message || 'Could not fetch user',
+        });
     }
 });
 
 //delte currently logged in user
 router.delete('/', async (req, res) => {
     try {
-        const response = await User.findByIdAndDelete(res.locals.token.id);
+        const response = await User.findOneAndDelete({email: res.locals.token.email});
+        User.find
         res.status(200).json(response);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not delete user'});
+        res.status(500).json({
+            error: error.message || 'Could not delete user',
+        });
     }
 });
 
@@ -150,9 +188,11 @@ router.delete('/:id', verifyAdmin, async (req, res) => {
         res.status(200).json(response);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not delete user'});
+        res.status(500).json({
+            error: error.message || 'Could not delete user',
+        });
     }
-})
+});
 
 //change desired user property
 router.put('/:id', verifyAdmin, async (req, res) => {
@@ -169,8 +209,10 @@ router.put('/:id', verifyAdmin, async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).json({error: error.message || 'Could not update user'});
+        res.status(500).json({
+            error: error.message || 'Could not update user',
+        });
     }
-})
+});
 
 module.exports = router;

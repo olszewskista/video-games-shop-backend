@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const Game = require('./models/Game');
-const Discount = require('./models/Discount');
 
-mongoose.connect('mongodb+srv://stepik-mongo-app:stepikMongoApp@stepik-mongo-app.yop01b0.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb://localhost:27017/');
 
 const games = [
     {
@@ -279,13 +278,13 @@ const games = [
 
 main();
 async function main() {
-    games.forEach(async (game) => {
+    await games.forEach(async (game) => {
         const newGame = new Game({
             ...game,
             releaseDate: new Date(game.releaseDate),
         });
         await newGame.save();
     });
-
-    return;
+    console.log('Games added successfully');
+    // process.exit(0);
 }

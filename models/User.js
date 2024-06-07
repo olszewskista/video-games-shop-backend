@@ -64,11 +64,11 @@ const UserSchema = new mongoose.Schema({
             message: 'Please enter correct email',
         },
     },
-    password: {
-        type: String,
-        required: [true, 'Password is required'],
-        minlength: 6
-    },
+    // password: {
+    //     type: String,
+    //     required: [true, 'Password is required'],
+    //     minlength: 6
+    // },
     library: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'game'
@@ -95,31 +95,32 @@ const UserSchema = new mongoose.Schema({
         ref: 'ticket'
     }],
     address: AddressSchema,
-    creditCard: CreditCardSchema
+    creditCard: CreditCardSchema,
+    roles: [String]
 });
 
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.balance = this.balance.toFixed(2)
-    console.log(this.balance)
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt)
+    // console.log(this.balance)
+    // const salt = await bcrypt.genSalt();
+    // this.password = await bcrypt.hash(this.password, salt)
     next()
 });
 
-UserSchema.statics.login = async function(email, password) {
-    const user = await this.findOne({email})
-    if (!user) {
-        throw new Error('Incorrect email!')
-    }
+// UserSchema.statics.login = async function(email, password) {
+//     const user = await this.findOne({email})
+//     if (!user) {
+//         throw new Error('Incorrect email!')
+//     }
 
-    const auth = await bcrypt.compare(password, user.password)
-    if (auth) {
-        return user
-    }
+//     const auth = await bcrypt.compare(password, user.password)
+//     if (auth) {
+//         return user
+//     }
 
-    throw new Error('Incorrect password!')
-}
+//     throw new Error('Incorrect password!')
+// }
 
 const User = mongoose.model('user', UserSchema);
 

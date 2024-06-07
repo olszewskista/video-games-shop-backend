@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Review = require('../models/Review');
+const User = require('../models/User')
 const { checkAuthMiddleware } = require('../utils/auth');
 
 const router = Router();
@@ -30,9 +31,11 @@ router.get('/:gameId', async (req, res) => {
 //create a review
 router.post('/', async (req, res) => {
     try {
+        const user = await User.findOne({ email: res.locals.token.email });
+        console.log(user)
         const review = new Review({
             gameId: req.body.gameId,
-            author: res.locals.token.id,
+            author: user._id,
             description: req.body.description,
             rating: req.body.rating,
             title: req.body.title,
